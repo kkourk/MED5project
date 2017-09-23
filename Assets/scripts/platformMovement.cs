@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class platformMovement : MonoBehaviour {
 
-    public GameObject start, end;
+    public GameObject start, middle, end;
     public float t =0.0f, velocitySpeed = 0.2f;
 
     float velocity =0;
@@ -19,7 +19,10 @@ public class platformMovement : MonoBehaviour {
     t += velocity * Time.deltaTime;
     if (t > 1.0) { t = 1.0f; }
     if (t < 0.0) { t = 0.0f; }
-    transform.position = (1 - t) * start.transform.position + t * end.transform.position;
+    transform.position =
+            Mathf.Pow(1 - t, 2) * start.transform.position
+            + 2 * (1 - t) * t * middle.transform.position
+            + Mathf.Pow(t, 2) * end.transform.position;
     }
 
     public void MovePlatform()
