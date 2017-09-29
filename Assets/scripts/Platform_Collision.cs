@@ -22,4 +22,4 @@ public class Platform_Collision : MonoBehaviour {
 
     }	
 	}
-}
+

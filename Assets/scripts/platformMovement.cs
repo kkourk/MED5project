@@ -2,40 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class platformMovement : MonoBehaviour {
+public class platformMovement : MonoBehaviour
+{
 
     public GameObject[] platform;
 
-    GameObject middle;
-    
+    public GameObject middle;
 
-    public float t =0.0f, velocitySpeed = 0.2f;
 
-    float velocity =0;
+    public float t = 0.0f, velocitySpeed = 0.2f;
+
+    float velocity = 0;
     // Use this for initialization
-	void Start () {
-        middle.transform.position = platform[1].transform.position + new Vector3(0, 2, 0);
+    void Start()
+    {
+       
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-    t += velocity * Time.deltaTime;
-    if (t > 1.0)
+
+    // Update is called once per frame
+    void Update()
     {
+        t += velocity * Time.deltaTime;
+        if (t > 1.0)
+        {
+            changePlatforms();
             t = 0.0f;
             velocity = 0;
 
-    }
-    else
-    {
-        transform.position =
-            Mathf.Pow(1 - t, 2) * platform[0].transform.position
-            + 2 * (1 - t) * t * middle.transform.position
-            + Mathf.Pow(t, 2) * platform[1].transform.position;
-    }
+        }
+        else
+        {
+            transform.position =
+                Mathf.Pow(1 - t, 2) * platform[0].transform.position
+                + 2 * (1 - t) * t * middle.transform.position
+                + Mathf.Pow(t, 2) * platform[1].transform.position;
+        }
 
-    if (t < 0.0) { t = 0.0f; }
+        if (t < 0.0) { t = 0.0f; }
 
     }
 
@@ -43,15 +47,17 @@ public class platformMovement : MonoBehaviour {
     {
         GameObject temp = platform[0];
 
-        for (int i = 0; i < platform.Length-1; i++)
+        for (int i = 0; i < platform.Length; i++)
         {
-            if (i == platform.Length-1)
+            if (i == platform.Length - 1)
             {
+
                 platform[i] = temp;
             }
             else
             {
-                platform[i] = platform[i+1];
+                platform[i] = platform[i + 1];
+
             }
             middle.transform.position = platform[1].transform.position + new Vector3(0, 2, 0);
 
