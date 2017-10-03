@@ -6,6 +6,8 @@ public class touchbutton : MonoBehaviour {
 
     Rigidbody rb;
 
+    public GameObject lift;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -20,8 +22,7 @@ public class touchbutton : MonoBehaviour {
     {
         if (other.gameObject.tag == "button")
         {
-            Debug.Log("debug");
-            GetComponentInParent<platformMovement>().MovePlatform();
+            lift.GetComponent<platformMovement>().MovePlatform();
         }
     }
 }
