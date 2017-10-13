@@ -4,57 +4,69 @@ using UnityEngine;
 
 public class Pickupobject : MonoBehaviour {
 
-    private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
-    private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
+	private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
+	private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
 
-    private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
-    private SteamVR_TrackedObject trackedObj;
+	private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
+	private SteamVR_TrackedObject trackedObj;
 
-    //HashSet<InteractableItem>();
+	HashSet<Interactable> objectsHoveringOver = new HashSet<Interactable>();
 
-    private GameObject pickup;
+	private Interactable closestItem;
+	private Interactable interactingItem;
 
-    Vector3 gripPosition;
+	// Use this for initialization
+	void Start () {
+		trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
+	}
 
-    // Use this for initialization
-    void Start () {
+	// Update is called once per frame
+	void Update () {
+		if (controller == null) {
+			Debug.Log("Controller not initialized");
+			return;
+		}
 
-        trackedObj = GetComponent<SteamVR_TrackedObject>();
-    }
+		if (controller.GetPressDown(triggerButton)) {
+			float minDistance = float.MaxValue;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "shape") {
-            pickup = collider.gameObject;
-        }
+			float distance;
+			foreach (Interactable item in objectsHoveringOver) {
+				distance = (item.transform.position - transform.position).sqrMagnitude;
 
-    }
+				if (distance < minDistance) {
+					minDistance = distance;
+					closestItem = item;
+				}
+			}
 
-    private void OnTriggerExit(Collider collider){
-        if (collider.tag == "shape")
-            pickup = null;
-    }
+			interactingItem = closestItem;
 
-    // Update is called once per frame
-    void Update () {
+			if (interactingItem) {
+				if (interactingItem.IsInteracting()) {
+					interactingItem.EndInteraction(this);
+				}
 
-        if (controller == null){
-            Debug.Log("controller not found");
-            return;
-        }
+				interactingItem.BeginInteraction(this);
+			}
+		}
 
-        if (controller.GetPressDown(gripButton) && pickup != null){
-            Debug.Log("Success");
-            pickup.transform.parent = this.transform;
-            pickup.GetComponent<Rigidbody>().useGravity = false;
+		if (controller.GetPressUp(triggerButton) && interactingItem != null) {
+			interactingItem.EndInteraction(this);
+		}
+	}
 
-        }
-        if (controller.GetPressUp(gripButton) && pickup != null){
-            pickup.transform.parent = null;
-            pickup.GetComponent<Rigidbody>().useGravity = true;
-        }
-       
-    }
+	private void OnTriggerEnter(Collider collider) {
+		Interactable collidedItem = collider.GetComponent<Interactable>();
+		if (collidedItem) {
+			objectsHoveringOver.Add(collidedItem);
+		}
+	}
 
+	private void OnTriggerExit(Collider collider) {
+		Interactable collidedItem = collider.GetComponent<Interactable>();
+		if (collidedItem) {
+			objectsHoveringOver.Remove(collidedItem);
+		}
+	}
 }
-

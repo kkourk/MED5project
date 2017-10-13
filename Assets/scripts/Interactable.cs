@@ -24,8 +24,8 @@ public class Interactable : MonoBehaviour {
     {
         rigidbody = GetComponent<Rigidbody>();
         interactionPoint = new GameObject().transform;
-        velocityFactor /= rigidbody.mass;
-        rotationFactor /= rigidbody.mass;
+        velocityFactor /= 10;
+        rotationFactor /= 10;
     }
 
     // Update is called once per frame

@@ -21,7 +21,7 @@ public class Wandcontroller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        trackedObj = GetComponent<SteamVR_TrackedObject>();
+        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
 
     }
 
@@ -38,8 +38,8 @@ public class Wandcontroller : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "bar")
-            pickup = null;
+      //  if (collider.tag == "bar")
+          //  pickup = null;
     }
     
     // Update is called once per frame
@@ -60,9 +60,10 @@ public class Wandcontroller : MonoBehaviour
             Debug.Log(gripPosition);
 
         }
-        if (controller.GetPressUp(gripButton) && pickup != null)
+        if (controller.GetPressUp(gripButton))
         {
             isClimbing = false;
+			pickup = null;
         }
 
         if (isClimbing)
