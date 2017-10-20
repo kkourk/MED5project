@@ -50,20 +50,9 @@ public class Plain_Move : MonoBehaviour {
 
 	}
 
-	public void SetRotation()
+	public void SetRotation(int angle)
 	{
-		if (!isRotating)
-		{
-			if (maxRotation == 90)
-			{
-				maxRotation = 0;
-			}
-			else
-			{
-				maxRotation = 90;
-			}
-
-		}
+        maxRotation = angle; 
 
 	}
 }

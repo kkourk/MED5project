@@ -23,7 +23,7 @@ public class rotatePlatform : MonoBehaviour {
         Debug.Log("entered");
         if (other.tag == "button")
         {
-            plane.GetComponent<Plain_Move>().SetRotation();
+           // plane.GetComponent<Plain_Move>().SetRotation();
         }
     }
 }

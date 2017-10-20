@@ -10,6 +10,7 @@ TagManager:
   - projectile
   - bar
   - shape
+  - lever
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - LeverBase
+  - LeverHandle
   - 
   - 
   - 

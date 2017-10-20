@@ -14,15 +14,30 @@ public class Wandcontroller : MonoBehaviour
 
     public GameObject cameraRig;
 
+    public GameObject upperLimitGO;
+    public GameObject lowerLimitGO;
+
+    float upperLimit;
+    float lowerLimit;
+
     Vector3 gripPosition;
-    Vector3 difference;
+    Vector3 differencePosition;
+    Vector3 cameraRigPosition;
+
+    float gripY;
+    float differenceY;
+
+
+
+    Vector3 temp;
+
     bool isClimbing;
 
     // Use this for initialization
     void Start()
     {
-        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
-
+        upperLimit = upperLimitGO.transform.position.y + upperLimitGO.transform.lossyScale.y / 2;
+        lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -36,44 +51,117 @@ public class Wandcontroller : MonoBehaviour
 
     }
 
+    void OnTriggerStay(Collider other)
+    {
+
+    }
+
     private void OnTriggerExit(Collider collider)
     {
-      //  if (collider.tag == "bar")
-          //  pickup = null;
+        //  if (collider.tag == "bar")
+        //  pickup = null;
     }
-    
+
     // Update is called once per frame
     void Update()
     {
+        solution2();
 
-        if (controller == null)
-        {
-            Debug.Log("controller not found");
-            return;
-        }
+    }
 
+    void solution2()
+    {
         if (controller.GetPressDown(gripButton) && pickup != null)
         {
             Debug.Log("Success");
             gripPosition = transform.position;
+            cameraRigPosition = cameraRig.transform.position;
             isClimbing = true;
             Debug.Log(gripPosition);
 
         }
         if (controller.GetPressUp(gripButton))
         {
+
+            Debug.Log("cameraRigPosition: " + cameraRigPosition);
+            Debug.Log("cameraRig Transform: " + cameraRig.transform.position);
+            temp = cameraRigPosition;
+            temp.y = cameraRig.transform.position.y;
+            cameraRig.transform.position = temp;
             isClimbing = false;
-			pickup = null;
+            pickup = null;
+            Debug.Log("resetted cameraRig position");
+
+
         }
 
         if (isClimbing)
         {
             Debug.Log("is climbing");
-            difference = (gripPosition - transform.position);
 
-            cameraRig.transform.position += difference;
+            differencePosition = (gripPosition - transform.position);
+
+            cameraRig.transform.position += differencePosition;
+
+            if (cameraRig.transform.position.y > upperLimit)
+            {
+                temp = cameraRig.transform.position;
+                temp.y = upperLimit;
+                cameraRig.transform.position = temp;
+            }
+            if (cameraRig.transform.position.y < lowerLimit)
+            {
+                temp = cameraRig.transform.position;
+                temp.y = lowerLimit;
+                cameraRig.transform.position = temp;
+            }
         }
     }
 
+
+    void solution1()
+    {
+
+        if (controller.GetPressDown(gripButton) && pickup != null)
+        {
+            Debug.Log("Success");
+            gripY = transform.position.y;
+            isClimbing = true;
+            Debug.Log(gripY);
+
+        }
+        if (controller.GetPressUp(gripButton))
+        {
+            isClimbing = false;
+            pickup = null;
+        }
+
+        if (isClimbing)
+        {
+            Debug.Log("is climbing");
+
+            differenceY = (gripY - transform.position.y);
+
+            temp = cameraRig.transform.position;
+            temp.y += differenceY;
+
+            cameraRig.transform.position = temp;
+
+            if (cameraRig.transform.position.y > upperLimit)
+            {
+                temp = cameraRig.transform.position;
+                temp.y = upperLimit;
+                cameraRig.transform.position = temp;
+            }
+            if (cameraRig.transform.position.y < lowerLimit)
+            {
+                temp = cameraRig.transform.position;
+                temp.y = lowerLimit;
+                cameraRig.transform.position = temp;
+            }
+        }
+    }
+
+}
 
 }
