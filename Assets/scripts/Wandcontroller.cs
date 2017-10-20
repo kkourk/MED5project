@@ -38,7 +38,9 @@ public class Wandcontroller : MonoBehaviour
     {
         upperLimit = upperLimitGO.transform.position.y + upperLimitGO.transform.lossyScale.y / 2;
         lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2;
-    }
+
+        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
+}
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -164,4 +166,3 @@ public class Wandcontroller : MonoBehaviour
 
 }
 
-}
