@@ -5,7 +5,7 @@ using UnityEngine;
 public class rotatePlatform : MonoBehaviour {
 
     public GameObject plane;
-
+    
     Rigidbody rb;
 
 	// Use this for initialization
@@ -27,3 +27,4 @@ public class rotatePlatform : MonoBehaviour {
         }
     }
 }
+

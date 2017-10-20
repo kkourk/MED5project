@@ -32,3 +32,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Scenes/ladderScene fixes.unity.meta
+Assets/Scenes/ladderScene fixes.unity.meta
+Assets/scripts/NewBehaviourScript.cs.meta
+Assets/scripts/Plain_Move.cs
+Assets/scripts/Platform_Collision.cs
