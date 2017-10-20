@@ -6,6 +6,7 @@ public class Platform_Collision : MonoBehaviour {
    
     public GameObject plain;
 
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,7 +14,7 @@ public class Platform_Collision : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-            print("touched platdform");
+            print("touched platform");
         if (other.tag == "Player")
         {
             plain.GetComponent<Plain_Move>().SetRotation();
