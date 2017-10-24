@@ -164,4 +164,3 @@ public class Wandcontroller : MonoBehaviour
 
 }
 
-}
