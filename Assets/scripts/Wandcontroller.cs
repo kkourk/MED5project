@@ -5,164 +5,155 @@ using UnityEngine;
 public class Wandcontroller : MonoBehaviour
 {
 
-    private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
-    private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
-    private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
-    private SteamVR_TrackedObject trackedObj;
+	private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
+	private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
 
-    private GameObject pickup;
+	private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input ((int)trackedObj.index); } }
 
-    public GameObject cameraRig;
+	private SteamVR_TrackedObject trackedObj;
 
-    public GameObject upperLimitGO;
-    public GameObject lowerLimitGO;
+	private GameObject pickup;
 
-    float upperLimit;
-    float lowerLimit;
+	public GameObject cameraRig;
 
-    Vector3 gripPosition;
-    Vector3 differencePosition;
-    Vector3 cameraRigPosition;
+	public GameObject upperLimitGO;
+	public GameObject lowerLimitGO;
 
-    float gripY;
-    float differenceY;
+	float upperLimit;
+	float lowerLimit;
 
+	Vector3 gripPosition;
+	Vector3 differencePosition;
+	Vector3 cameraRigPosition;
 
-
-    Vector3 temp;
-
-    bool isClimbing;
-
-    // Use this for initialization
-    void Start()
-    {
-        upperLimit = upperLimitGO.transform.position.y + upperLimitGO.transform.lossyScale.y / 2;
-        lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2;
-
-        trackedObj = GetComponentInParent<SteamVR_TrackedObject>();
-}
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "bar")
-        {
-            pickup = collider.gameObject;
-
-        }
+	float gripY;
+	float differenceY;
 
 
-    }
 
-    void OnTriggerStay(Collider other)
-    {
+	Vector3 temp;
 
-    }
+	bool isClimbing;
 
-    private void OnTriggerExit(Collider collider)
-    {
-        //  if (collider.tag == "bar")
-        //  pickup = null;
-    }
+	// Use this for initialization
+	void Start ()
+	{
+		upperLimit = upperLimitGO.transform.position.y + upperLimitGO.transform.lossyScale.y / 2;
+		lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2;
 
-    // Update is called once per frame
-    void Update()
-    {
-        solution2();
+		trackedObj = GetComponentInParent<SteamVR_TrackedObject> ();
+	}
 
-    }
+	private void OnTriggerEnter (Collider collider)
+	{
+		if (collider.tag == "bar") {
+			pickup = collider.gameObject;
 
-    void solution2()
-    {
-        if (controller.GetPressDown(gripButton) && pickup != null)
-        {
-            Debug.Log("Success");
-            gripPosition = transform.position;
-            cameraRigPosition = cameraRig.transform.position;
-            isClimbing = true;
-            Debug.Log(gripPosition);
-
-        }
-        if (controller.GetPressUp(gripButton))
-        {
-
-            Debug.Log("cameraRigPosition: " + cameraRigPosition);
-            Debug.Log("cameraRig Transform: " + cameraRig.transform.position);
-            temp = cameraRigPosition;
-            temp.y = cameraRig.transform.position.y;
-            cameraRig.transform.position = temp;
-            isClimbing = false;
-            pickup = null;
-            Debug.Log("resetted cameraRig position");
+		}
 
 
-        }
+	}
 
-        if (isClimbing)
-        {
-            Debug.Log("is climbing");
+	void OnTriggerStay (Collider other)
+	{
 
-            differencePosition = (gripPosition - transform.position);
+	}
 
-            cameraRig.transform.position += differencePosition;
+	private void OnTriggerExit (Collider collider)
+	{
+		//  if (collider.tag == "bar")
+		//  pickup = null;
+	}
 
-            if (cameraRig.transform.position.y > upperLimit)
-            {
-                temp = cameraRig.transform.position;
-                temp.y = upperLimit;
-                cameraRig.transform.position = temp;
-            }
-            if (cameraRig.transform.position.y < lowerLimit)
-            {
-                temp = cameraRig.transform.position;
-                temp.y = lowerLimit;
-                cameraRig.transform.position = temp;
-            }
-        }
-    }
+	// Update is called once per frame
+	void Update ()
+	{
+		solution1 ();
+
+	}
+
+	void solution2 ()
+	{
+		if (controller.GetPressDown (gripButton) && pickup != null) {
+			Debug.Log ("Success");
+			gripPosition = transform.position;
+			cameraRigPosition = cameraRig.transform.position;
+			isClimbing = true;
+			Debug.Log (gripPosition);
+
+		}
+		if (controller.GetPressUp (gripButton)) {
+
+			Debug.Log ("cameraRigPosition: " + cameraRigPosition);
+			Debug.Log ("cameraRig Transform: " + cameraRig.transform.position);
+			temp = cameraRigPosition;
+			temp.y = cameraRig.transform.position.y;
+			cameraRig.transform.position = temp;
+			isClimbing = false;
+			pickup = null;
+			Debug.Log ("resetted cameraRig position");
 
 
-    void solution1()
-    {
+		}
 
-        if (controller.GetPressDown(gripButton) && pickup != null)
-        {
-            Debug.Log("Success");
-            gripY = transform.position.y;
-            isClimbing = true;
-            Debug.Log(gripY);
+		if (isClimbing) {
+			Debug.Log ("is climbing");
 
-        }
-        if (controller.GetPressUp(gripButton))
-        {
-            isClimbing = false;
-            pickup = null;
-        }
+			differencePosition = (gripPosition - transform.position);
 
-        if (isClimbing)
-        {
-            Debug.Log("is climbing");
+			cameraRig.transform.position += differencePosition;
 
-            differenceY = (gripY - transform.position.y);
+			if (cameraRig.transform.position.y > upperLimit) {
+				temp = cameraRig.transform.position;
+				temp.y = upperLimit;
+				cameraRig.transform.position = temp;
+			}
+			if (cameraRig.transform.position.y < lowerLimit) {
+				temp = cameraRig.transform.position;
+				temp.y = lowerLimit;
+				cameraRig.transform.position = temp;
+			}
+		}
+	}
 
-            temp = cameraRig.transform.position;
-            temp.y += differenceY;
 
-            cameraRig.transform.position = temp;
+	void solution1 ()
+	{
 
-            if (cameraRig.transform.position.y > upperLimit)
-            {
-                temp = cameraRig.transform.position;
-                temp.y = upperLimit;
-                cameraRig.transform.position = temp;
-            }
-            if (cameraRig.transform.position.y < lowerLimit)
-            {
-                temp = cameraRig.transform.position;
-                temp.y = lowerLimit;
-                cameraRig.transform.position = temp;
-            }
-        }
-    }
+		if (controller.GetPressDown (gripButton) && pickup != null) {
+			Debug.Log ("Success");
+			gripY = transform.position.y;
+			isClimbing = true;
+			Debug.Log (gripY);
+
+		}
+		if (controller.GetPressUp (gripButton)) {
+			isClimbing = false;
+			pickup = null;
+		}
+
+		if (isClimbing) {
+			Debug.Log ("is climbing");
+
+			differenceY = (gripY - transform.position.y);
+
+			temp = cameraRig.transform.position;
+			temp.y += differenceY;
+
+			cameraRig.transform.position = temp;
+
+			if (cameraRig.transform.position.y > upperLimit) {
+				temp = cameraRig.transform.position;
+				temp.y = upperLimit;
+				cameraRig.transform.position = temp;
+			}
+			if (cameraRig.transform.position.y < lowerLimit) {
+				temp = cameraRig.transform.position;
+				temp.y = lowerLimit;
+				cameraRig.transform.position = temp;
+			}
+		}
+	}
 
 }
 

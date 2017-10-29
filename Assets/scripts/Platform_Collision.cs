@@ -17,7 +17,7 @@ public class Platform_Collision : MonoBehaviour {
         if (other.tag == "Player")
         {
             Debug.Log(other.name);
-            other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            other.gameObject.GetComponent<R	igidbody>().angularVelocity = Vector3.zero;
             //other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             plain.GetComponent<Plain_Move>().SetRotation();
         }
