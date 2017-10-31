@@ -39,7 +39,7 @@ public class Wandcontroller : MonoBehaviour
 	void Start ()
 	{
 		upperLimit = upperLimitGO.transform.position.y + upperLimitGO.transform.lossyScale.y / 2;
-		lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2;
+		lowerLimit = lowerLimitGO.transform.position.y + lowerLimitGO.transform.lossyScale.y / 2-0.34f;
 
 		trackedObj = GetComponentInParent<SteamVR_TrackedObject> ();
 	}
