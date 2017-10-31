@@ -255,6 +255,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 82116927536945900, guid: 3686299a57a453849b10c1c64589d417,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3686299a57a453849b10c1c64589d417, type: 2}
   m_IsPrefabParent: 0

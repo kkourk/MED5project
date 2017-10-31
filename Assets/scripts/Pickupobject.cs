@@ -41,6 +41,8 @@ public class Pickupobject : MonoBehaviour {
 			}
 
 			interactingItem = closestItem;
+            closestItem = null;
+
 
 			if (interactingItem) {
 				if (interactingItem.IsInteracting()) {
