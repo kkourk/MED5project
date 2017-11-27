@@ -255,6 +255,7 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 82116927536945900, guid: 3686299a57a453849b10c1c64589d417,
         type: 2}
       propertyPath: spreadCustomCurve.m_RotationOrder
@@ -269,6 +270,8 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> parent of 09e7691... fixed problem with grabbing the last ball you held
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3686299a57a453849b10c1c64589d417, type: 2}
   m_IsPrefabParent: 0
