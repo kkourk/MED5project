@@ -49,7 +49,7 @@ public class wheelHandle : MonoBehaviour {
 
 		if (other.gameObject.GetComponent<Pickupobject>().controller == controller)
 		{
-			if (controller.GetPress(Valve.VR.EVRButtonId.k_EButton_Grip)) 
+			if (controller.GetPress(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger)) 
 			{
 				
 			
