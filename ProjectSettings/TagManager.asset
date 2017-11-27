@@ -11,6 +11,9 @@ TagManager:
   - bar
   - shape
   - lever
+  - handle
+  - Wall
+  - Box
   layers:
   - Default
   - TransparentFX
