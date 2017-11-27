@@ -20,6 +20,14 @@ public class Interactable : MonoBehaviour
 
 	private Transform interactionPoint;
 
+	public AudioClip wallHit;
+	public AudioClip boxHit;
+	public AudioClip grab;
+
+
+	AudioSource audio;
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,6 +35,8 @@ public class Interactable : MonoBehaviour
 		interactionPoint = new GameObject ().transform;
 		velocityFactor /= 5;
 		rotationFactor /= 5;
+
+		audio = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -55,6 +65,11 @@ public class Interactable : MonoBehaviour
 		interactionPoint.SetParent (transform, true);
 
 		currentlyInteracting = true;
+
+		Debug.Log("grab ball sound");
+		audio.clip = grab;
+		audio.Play();
+
 	}
 
 	public void EndInteraction (Pickupobject wand)
@@ -68,5 +83,21 @@ public class Interactable : MonoBehaviour
 	public bool IsInteracting ()
 	{
 		return currentlyInteracting;
+	}
+
+private void OnTriggerEnter (Collider collider)
+	{
+		if (collider.tag == "Box") {
+			Debug.Log("hit box sound");
+			audio.clip = boxHit;
+			audio.Play();
+		}
+		if (collider.tag == "Wall") {
+			Debug.Log("hit wall sound");
+			audio.clip = wallHit;
+			audio.Play();
+		}
+
+
 	}
 }
