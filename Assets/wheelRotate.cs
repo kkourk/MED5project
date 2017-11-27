@@ -22,6 +22,11 @@ public class wheelRotate : MonoBehaviour {
 	public bool atUpperLimit;
 	public bool atLowerLimit;
 
+public float soundTolerance;
+
+
+public AudioSource rattling;
+
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +58,23 @@ public class wheelRotate : MonoBehaviour {
 				angle -= 360;
 			}
 
+			rattling.volume =  Mathf.Abs(prevAngle - transform.eulerAngles.y)/10;
+
+
+			/*if ( soundTolerance < Mathf.Abs(prevAngle - transform.eulerAngles.y))
+            {
+                Debug.Log("mute is false");
+                rattling.mute = false;
+				//squek.mute = false;
+
+            }
+            else
+            {
+                rattling.mute = true;
+				Debug.Log("stopped rotating");
+
+				//squek.mute = true;
+            }*/
 
 
 			plane.transform.eulerAngles = new Vector3(0,(transform.eulerAngles.y + angle)/turnsPerLoop,0);
