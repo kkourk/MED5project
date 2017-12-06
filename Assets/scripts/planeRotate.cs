@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class wheelRotate : MonoBehaviour {
+public class planeRotate : MonoBehaviour {
 
-	//set gripPosition when they press button
-	//only track controller when button is down
-	//set controller gameobject to null when button is not pressed
 //set gripPosition when they press button
 	//only track controller when button is down
 	//set controller gameobject to null when button is not pressed
@@ -35,7 +32,7 @@ public AudioSource rattling;
 	{
 		if (other.tag == "handle")
 		{
-			currentPos = other.transform.position;
+			currentPos = handle.transform.position;
 			currentPos.y = transform.position.y;
 			transform.LookAt(currentPos);
 
@@ -48,8 +45,8 @@ public AudioSource rattling;
 				angle -= 360;
 			}
 			
-			//Debug.Log(Mathf.Abs(prevAngle - transform.eulerAngles.y)/10);
-			rattling.volume = Mathf.Abs(prevAngle - transform.eulerAngles.y)/10;
+			Debug.Log(Mathf.Abs(prevAngle - transform.eulerAngles.y)/10);
+			rattling.volume = 0;// Mathf.Abs(prevAngle - transform.eulerAngles.y)/10;
 
 			plane.transform.eulerAngles = new Vector3(0,(transform.eulerAngles.y + angle)/turnsPerLoop,0);
 			prevAngle = transform.eulerAngles.y;

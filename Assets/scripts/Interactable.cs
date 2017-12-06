@@ -24,7 +24,6 @@ public class Interactable : MonoBehaviour
 	public AudioClip boxHit;
 	public AudioClip grab;
 
-
 	AudioSource audio;
 
 
@@ -63,10 +62,8 @@ public class Interactable : MonoBehaviour
 		interactionPoint.position = wand.transform.position;
 		interactionPoint.rotation = wand.transform.rotation;
 		interactionPoint.SetParent (transform, true);
-
 		currentlyInteracting = true;
 
-		Debug.Log("grab ball sound");
 		audio.clip = grab;
 		audio.Play();
 
@@ -85,19 +82,15 @@ public class Interactable : MonoBehaviour
 		return currentlyInteracting;
 	}
 
-private void OnTriggerEnter (Collider collider)
+    private void OnTriggerEnter (Collider collider)
 	{
 		if (collider.tag == "Box") {
-			Debug.Log("hit box sound");
 			audio.clip = boxHit;
 			audio.Play();
 		}
 		if (collider.tag == "Wall") {
-			Debug.Log("hit wall sound");
 			audio.clip = wallHit;
 			audio.Play();
 		}
-
-
 	}
 }
